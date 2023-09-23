@@ -15,11 +15,9 @@ class AppleProduct {
       if (!response.ok) throw Error("Stock check failed");
 
       const { body } = await response.json();
-      const modelColours = body.PickupMessage.stores[0].partsAvailability;
+      const modelIds = body.PickupMessage.stores[0].partsAvailability;
 
-      for (const modelColour in modelColours) {
-        if (modelColour === this.productId) await this.sendMessage();
-      }
+      if (modelIds.hasOwnProperty(this.productId)) this.sendMessage();
     } catch (e) {
       console.log(e.message);
     }
@@ -32,13 +30,13 @@ class AppleProduct {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        content: "<@276649462166978560> Wake up, iPhone restocked!",
+        content: "<@276649462166978560> iPhone 15 Pro restocked!",
       }),
     });
   }
 
   startMonitor() {
-    setInterval(() => this.checkStock(), 300000);
+    setInterval(() => this.checkStock(), 60000);
   }
 }
 
