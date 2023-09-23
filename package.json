@@ -1,7 +1,7 @@
 {
   "name": "apple-product-monitor",
   "version": "1.0.1",
-  "description": "",
+  "description": "Monitor to catch apple product restocks",
   "main": "index.js",
   "type": "module",
   "scripts": {
