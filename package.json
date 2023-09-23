@@ -1,6 +1,6 @@
 {
-  "name": "iphone-monitor",
-  "version": "1.0.0",
+  "name": "apple-product-monitor",
+  "version": "1.0.1",
   "description": "",
   "main": "index.js",
   "type": "module",
