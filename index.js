@@ -2,15 +2,17 @@ import { config } from "dotenv";
 config();
 
 class AppleProduct {
-  constructor(productId) {
+  constructor(productId, zipcode) {
     this.productId = productId;
+    this.zipcode = zipcode;
+
     this.startMonitor();
   }
 
   async checkStock() {
     try {
       const response = await fetch(
-        `https://www.apple.com/sg/shop/pickup-message-recommendations?mts.0=regular&location=${process.env.ZIPCODE}&product=${this.productId}`
+        `https://www.apple.com/sg/shop/pickup-message-recommendations?mts.0=regular&location=${this.zipcode}&product=${this.productId}`
       );
       if (!response.ok) throw Error("Stock check failed");
 
@@ -36,8 +38,8 @@ class AppleProduct {
   }
 
   startMonitor() {
-    setInterval(() => this.checkStock(), 60000);
+    setInterval(() => this.checkStock(), 1000);
   }
 }
 
-new AppleProduct("MTUX3ZP/A");
+new AppleProduct("MTUX3ZP/A", process.env.ZIPCODE);
