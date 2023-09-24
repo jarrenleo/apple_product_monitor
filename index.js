@@ -38,7 +38,7 @@ class AppleProduct {
   }
 
   startMonitor() {
-    setInterval(() => this.checkStock(), 1000);
+    setInterval(() => this.checkStock(), 60000);
   }
 }
 
