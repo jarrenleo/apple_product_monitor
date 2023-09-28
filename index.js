@@ -17,26 +17,30 @@ class AppleProduct {
       if (!response.ok) throw Error("Stock check failed");
 
       const { body } = await response.json();
-      const modelAvailabiltity =
-        body.content.pickupMessage.stores[0].partsAvailability[this.productId];
+      const stores = body.content.pickupMessage.stores;
 
-      if (modelAvailabiltity.pickupDisplay === "available")
-        this.sendMessage(
-          modelAvailabiltity.messageTypes.regular.storePickupProductTitle
-        );
+      for (const store of stores) {
+        const modelAvailabiltity = store.partsAvailability[this.productId];
+
+        if (modelAvailabiltity.pickupDisplay === "available")
+          this.sendMessage(
+            modelAvailabiltity.messageTypes.regular.storePickupProductTitle,
+            store.storeName
+          );
+      }
     } catch (e) {
       console.log(e.message);
     }
   }
 
-  async sendMessage(productTitle) {
+  async sendMessage(productTitle, location) {
     await fetch(process.env.DiSCORD_WEBHOOK, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        content: `<@276649462166978560> ${productTitle} restocked!`,
+        content: `<@276649462166978560> ${productTitle} restocked at ${location}!`,
       }),
     });
   }
