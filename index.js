@@ -34,7 +34,7 @@ class AppleProduct {
   }
 
   async sendMessage(productTitle, location) {
-    await fetch(process.env.DiSCORD_WEBHOOK, {
+    await fetch(process.env.DISCORD_WEBHOOK, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
