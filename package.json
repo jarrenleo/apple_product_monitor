@@ -1,7 +1,7 @@
 {
   "name": "apple-product-monitor",
-  "version": "1.0.4",
-  "description": "Monitor to catch apple product restocks",
+  "version": "1.0.5",
+  "description": "Monitor that sends a telegram notification when an apple product of your choice is available instore",
   "main": "index.js",
   "type": "module",
   "scripts": {
@@ -10,6 +10,7 @@
   "author": "jarrenleo",
   "license": "ISC",
   "dependencies": {
-    "dotenv": "^16.3.1"
+    "dotenv": "^16.3.1",
+    "node-telegram-bot-api": "^0.63.0"
   }
 }

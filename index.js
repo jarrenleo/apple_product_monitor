@@ -1,11 +1,14 @@
 import { config } from "dotenv";
+import TelegramBot from "node-telegram-bot-api";
 config();
 
 class AppleProduct {
   constructor(productId, zipcode) {
     this.productId = productId;
     this.zipcode = zipcode;
-
+    this.bot = new TelegramBot(process.env.TELEGRAM_API_KEY, {
+      polling: false,
+    });
     this.startMonitor();
   }
 
@@ -23,7 +26,7 @@ class AppleProduct {
         const modelAvailabiltity = store.partsAvailability[this.productId];
 
         if (modelAvailabiltity.pickupDisplay === "available")
-          this.sendMessage(
+          this.sendNotification(
             modelAvailabiltity.messageTypes.regular.storePickupProductTitle,
             store.storeName
           );
@@ -33,16 +36,11 @@ class AppleProduct {
     }
   }
 
-  async sendMessage(productTitle, location) {
-    await fetch(process.env.DISCORD_WEBHOOK, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        content: `<@276649462166978560> ${productTitle} restocked at ${location}!`,
-      }),
-    });
+  async sendNotification(productTitle, location) {
+    this.bot.sendMessage(
+      process.env.TELEGRAM_GROUP_CHAT_ID,
+      `${productTitle} is available at ${location}!`
+    );
   }
 
   startMonitor() {
