@@ -46,15 +46,11 @@ class AppleProduct {
     }
   }
 
-  async sendNotification(productTitle, location) {
-    try {
-      this.bot.sendMessage(
-        process.env.TELEGRAM_GROUP_CHAT_ID,
-        `${productTitle} is available at ${location}!`
-      );
-    } catch (e) {
-      throw Error(e.message);
-    }
+  sendNotification(productTitle, location) {
+    this.bot.sendMessage(
+      process.env.TELEGRAM_GROUP_CHAT_ID,
+      `${productTitle} is available at ${location}!`
+    );
   }
 
   startMonitor() {
