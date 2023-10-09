@@ -1,6 +1,6 @@
 {
   "name": "apple-product-monitor",
-  "version": "1.0.5",
+  "version": "1.0.6",
   "description": "Monitor that sends a telegram notification when an apple product of your choice is available instore",
   "main": "index.js",
   "type": "module",

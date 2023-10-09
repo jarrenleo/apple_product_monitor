@@ -4,6 +4,7 @@ config();
 
 class AppleProduct {
   constructor(productId, zipcode) {
+    this.storeAvailability = new Set();
     this.productId = productId;
     this.zipcode = zipcode;
     this.bot = new TelegramBot(process.env.TELEGRAM_API_KEY, {
@@ -24,12 +25,24 @@ class AppleProduct {
 
       for (const store of stores) {
         const modelAvailabiltity = store.partsAvailability[this.productId];
+        const storeName = store.storeName;
 
-        if (modelAvailabiltity.pickupDisplay === "available")
+        if (
+          modelAvailabiltity.pickupDisplay === "unavailable" &&
+          this.storeAvailability.has(storeName)
+        )
+          this.storeAvailability.delete(storeName);
+
+        if (
+          modelAvailabiltity.pickupDisplay === "available" &&
+          !this.storeAvailability.has(storeName)
+        ) {
           this.sendNotification(
             modelAvailabiltity.messageTypes.regular.storePickupProductTitle,
-            store.storeName
+            storeName
           );
+          this.storeAvailability.add(storeName);
+        }
       }
     } catch (e) {
       console.log(e.message);
