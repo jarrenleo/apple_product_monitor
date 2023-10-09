@@ -24,8 +24,8 @@ class AppleProduct {
       const stores = body.content.pickupMessage.stores;
 
       for (const store of stores) {
-        const modelAvailabiltity = store.partsAvailability[this.productId];
         const storeName = store.storeName;
+        const modelAvailabiltity = store.partsAvailability[this.productId];
 
         if (
           modelAvailabiltity.pickupDisplay === "unavailable" &&
