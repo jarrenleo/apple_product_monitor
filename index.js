@@ -27,9 +27,10 @@ class AppleProduct {
         const storeName = store.storeName;
         const modelAvailabiltity = store.partsAvailability[this.productId];
 
-        if (modelAvailabiltity.pickupDisplay === "unavailable")
-          if (this.storeAvailability.has(storeName))
-            this.storeAvailability.delete(storeName);
+        if (modelAvailabiltity.pickupDisplay === "unavailable") {
+          if (!this.storeAvailability.has(storeName)) continue;
+          this.storeAvailability.delete(storeName);
+        }
 
         if (modelAvailabiltity.pickupDisplay === "available")
           if (!this.storeAvailability.has(storeName)) {
