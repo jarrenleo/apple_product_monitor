@@ -27,22 +27,18 @@ class AppleProduct {
         const storeName = store.storeName;
         const modelAvailabiltity = store.partsAvailability[this.productId];
 
-        if (
-          modelAvailabiltity.pickupDisplay === "unavailable" &&
-          this.storeAvailability.has(storeName)
-        )
-          this.storeAvailability.delete(storeName);
+        if (modelAvailabiltity.pickupDisplay === "unavailable")
+          if (this.storeAvailability.has(storeName))
+            this.storeAvailability.delete(storeName);
 
-        if (
-          modelAvailabiltity.pickupDisplay === "available" &&
-          !this.storeAvailability.has(storeName)
-        ) {
-          this.sendNotification(
-            modelAvailabiltity.messageTypes.regular.storePickupProductTitle,
-            storeName
-          );
-          this.storeAvailability.add(storeName);
-        }
+        if (modelAvailabiltity.pickupDisplay === "available")
+          if (!this.storeAvailability.has(storeName)) {
+            this.sendNotification(
+              modelAvailabiltity.messageTypes.regular.storePickupProductTitle,
+              storeName
+            );
+            this.storeAvailability.add(storeName);
+          }
       }
     } catch (e) {
       console.log(e.message);
